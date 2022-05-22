@@ -49,6 +49,29 @@ Response body:
 ]
 ```
 
+### GET /api/jobs/<job_id>
+
+Get a specific job using the MongoDB ID.
+
+Example: http://localhost:8082/api/jobs/6289face519d745781d584d4
+
+Response body:
+
+```
+{
+    "_id": "6289face519d745781d584d4",
+    "title": "Test job",
+    "status": "active",
+    "description": "Yet another test job",
+    "customer_name": "Bryn",
+    "customer_mobile": "124124124",
+    "job_num": 10,
+    "created_at": "2022-05-22T08:56:46.936Z",
+    "updated_date": "2022-05-22T08:59:17.995Z",
+    "__v": 0
+}
+```
+
 ### GET /api/jobs?sortBy=<sort_field>&order=<1|-1>
 
 Get all jobs, sorted by a specific field and ordered descending or ascending.
@@ -84,11 +107,11 @@ Response body:
 ]
 ```
 
-### GET /api/jobs/<job_status>
+### GET /api/jobs/status/<job_status>
 
 Get all jobs, filtered by a specific job status.
 
-Example: http://localhost:8082/api/jobs/completed
+Example: http://localhost:8082/api/jobs/status/completed
 
 Response body:
 

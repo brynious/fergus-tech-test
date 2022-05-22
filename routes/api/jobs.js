@@ -6,16 +6,15 @@ const { getNextJobNumber } = require('../../helpers/jobHelpers');
 // Load Job model
 const Job = require('../../models/Job');
 
-// @route       GET api/jobs/status
-//              GET api/jobs/status?sortBy=job_num&order=-1
-// @description Get all jobs. status param, sort, and order are optional.
-//              1 is ascending and -1 is descending
+// @route       GET api/jobs
+//              GET api/jobs?sortBy=job_num&order=-1
+// @description Get all jobs. Sort, and order params are optional.
+//              Order 1 is ascending and -1 is descending
 // @access      Public
-router.get('/:status?', (req, res) => {
-  const filterObj = req.params.status ? { status: req.params.status } : null;
+router.get('/', (req, res) => {
   const sortObj = { [req.query.sortBy]: req.query.order };
 
-  Job.find(filterObj)
+  Job.find()
     .sort(sortObj)
     .then(jobs => res.json(jobs))
     .catch(err => res.status(404).json({ error: 'Unable to access database' }));
@@ -27,6 +26,21 @@ router.get('/:status?', (req, res) => {
 router.get('/:id', (req, res) => {
   Job.findById(req.params.id)
     .then(job => res.json(job))
+    .catch(err => res.status(404).json({ error: 'Unable to access database' }));
+});
+
+// @route       GET api/jobs/status
+//              GET api/jobs/status?sortBy=job_num&order=-1
+// @description Get all jobs. Sort and order params are optional.
+//              1 is ascending and -1 is descending
+// @access      Public
+router.get('/status/:status?', (req, res) => {
+  const filterObj = req.params.status ? { status: req.params.status } : null;
+  const sortObj = { [req.query.sortBy]: req.query.order };
+
+  Job.find(filterObj)
+    .sort(sortObj)
+    .then(jobs => res.json(jobs))
     .catch(err => res.status(404).json({ error: 'Unable to access database' }));
 });
 
